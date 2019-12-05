@@ -57,7 +57,7 @@ let part1 = (start, end) => {
     }
   }
 
-  console.log(combinations.length);
+  console.log(`Part 1 answer: ${combinations.length}`);
 };
 
 let part2 = (start, end) => {
@@ -74,7 +74,7 @@ let part2 = (start, end) => {
     }
   }
 
-  console.log(combinations.length);
+  console.log(`Part 2 answer: ${combinations.length}`);
 };
 
 part1(start, end);
