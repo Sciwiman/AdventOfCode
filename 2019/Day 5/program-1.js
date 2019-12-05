@@ -7,12 +7,43 @@ const input = fs
   .map(val => parseInt(val));
 
 let updateArray = (array, index) => {
-  if (array[index] == 1) {
+  const instruction = array[index].toString();
+
+  const opCode = parseInt(instruction.slice(-2));
+
+  const modeFirstParam = parseInt(instruction.charAt(index.length - 3));
+  const modeSecondParam = parseInt(instruction.charAt(instruction.length - 4));
+  const modeThirdParam = parseInt(instruction.charAt(instruction.length - 5));
+
+  console.log({
+    opCode,
+    modeFirstParam,
+    modeSecondParam,
+    modeThirdParam
+  });
+
+  const valOne =
+    modeFirstParam === 0 ? array[array[index + 1]] : array[index + 1];
+
+  const valTwo =
+    modeSecondParam === 0 ? array[array[index + 2]] : array[index + 2];
+
+  const positionResult = modeThirdParam === 0 ? array[index + 3] : index + 3;
+
+  if (opCode == 1) {
     //Add the elements
-    array[array[index + 3]] = array[array[index + 1]] + array[array[index + 2]];
-  } else if (array[index] == 2) {
+    array[positionResult] = valOne + valTwo;
+  } else if (opCode == 2) {
     //Multiply the elements
-    array[array[index + 3]] = array[array[index + 1]] * array[array[index + 2]];
+    array[positionResult] = array[positionOne] * array[positionTwo];
+  } else if (opCode == 3) {
+    //Multiply the elements
+    array[positionResult] = array[positionOne] * array[positionTwo];
+  } else if (opCode == 4) {
+    //Multiply the elements
+    array[positionResult] = array[positionOne] * array[positionTwo];
+  } else {
+    throw `Unknown Opcode ${opCode}`;
   }
 };
 
