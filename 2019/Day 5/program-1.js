@@ -1,61 +1,43 @@
 // Just read in the file. Create an array and make sure all the values are integers
-
 const fs = require("fs");
 const input = fs
   .readFileSync("input.csv", "utf8")
   .split(",")
   .map(val => parseInt(val));
 
-let updateArray = (array, index) => {
-  const instruction = array[index].toString();
+part1 = arg => {
+  for (let i = 0; i < input.length; i++) {
+    const instruction = input[i].toString();
 
-  const opCode = parseInt(instruction.slice(-2));
+    const opCode = parseInt(instruction.slice(-2));
+    const firstParam =
+      parseInt(instruction.charAt(instruction.length - 3)) || 0;
+    const secondParam =
+      parseInt(instruction.charAt(instruction.length - 4)) || 0;
 
-  const modeFirstParam = parseInt(instruction.charAt(index.length - 3));
-  const modeSecondParam = parseInt(instruction.charAt(instruction.length - 4));
-  const modeThirdParam = parseInt(instruction.charAt(instruction.length - 5));
+    const firstVal = firstParam === 1 ? input[i + 1] : input[input[i + 1]];
+    const secondVal = secondParam === 1 ? input[i + 2] : input[input[i + 2]];
 
-  console.log({
-    opCode,
-    modeFirstParam,
-    modeSecondParam,
-    modeThirdParam
-  });
-
-  const valOne =
-    modeFirstParam === 0 ? array[array[index + 1]] : array[index + 1];
-
-  const valTwo =
-    modeSecondParam === 0 ? array[array[index + 2]] : array[index + 2];
-
-  const positionResult = modeThirdParam === 0 ? array[index + 3] : index + 3;
-
-  if (opCode == 1) {
-    //Add the elements
-    array[positionResult] = valOne + valTwo;
-  } else if (opCode == 2) {
-    //Multiply the elements
-    array[positionResult] = array[positionOne] * array[positionTwo];
-  } else if (opCode == 3) {
-    //Multiply the elements
-    array[positionResult] = array[positionOne] * array[positionTwo];
-  } else if (opCode == 4) {
-    //Multiply the elements
-    array[positionResult] = array[positionOne] * array[positionTwo];
-  } else {
-    throw `Unknown Opcode ${opCode}`;
+    switch (opCode) {
+      case 1:
+        input[input[i + 3]] = firstVal + secondVal;
+        i += 3;
+        break;
+      case 2:
+        input[input[i + 3]] = firstVal * secondVal;
+        i += 3;
+        break;
+      case 3:
+        input[input[i + 1]] = arg;
+        i += 1;
+        break;
+      case 4:
+        firstVal > 0 && console.log(`Answer: ${firstVal}`);
+        i += 1;
+        break;
+      case 99:
+        return;
+    }
   }
 };
-
-//Loop through the entire csv array, 4 elements at a time
-for (let i = 0; i < input.length; i += 4) {
-  // If the op code is 99, exit
-  if (input[i] === 99) {
-    break;
-  }
-
-  updateArray(input, i);
-}
-
-// The magical answer
-console.log(input[0]);
+part1(1);
