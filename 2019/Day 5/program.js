@@ -1,4 +1,3 @@
-// Just read in the file. Create an array and make sure all the values are integers
 const fs = require("fs");
 const file = fs
   .readFileSync("input.csv", "utf8")
