@@ -11,11 +11,15 @@ algorithm = arg => {
     const instruction = input[i].toString();
     const opCode = parseInt(instruction.slice(-2));
 
-    const firstParam = parseInt(instruction.charAt(instruction.length - 3)) || 0;
-    const secondParam = parseInt(instruction.charAt(instruction.length - 4)) || 0;
+    const firstParam =
+      parseInt(instruction.charAt(instruction.length - 3)) || 0;
+    const secondParam =
+      parseInt(instruction.charAt(instruction.length - 4)) || 0;
 
     const firstVal = firstParam === 1 ? input[i + 1] : input[input[i + 1]];
     const secondVal = secondParam === 1 ? input[i + 2] : input[input[i + 2]];
+
+    let output = 0;
 
     switch (opCode) {
       case 1:
@@ -31,7 +35,9 @@ algorithm = arg => {
         i += 1;
         break;
       case 4:
-        firstVal > 0 && console.log(`Answer: ${firstVal}`);
+        if (firstVal > 0) {
+          output = arg;
+        }
         i += 1;
         break;
       case 5:
@@ -57,7 +63,7 @@ algorithm = arg => {
         i += 3;
         break;
       case 99:
-        return;
+        return output;
     }
   }
 };
